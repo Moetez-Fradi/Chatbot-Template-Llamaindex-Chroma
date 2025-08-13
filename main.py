@@ -5,6 +5,10 @@ from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core import VectorStoreIndex
 from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.core import Document
+from llama_index.core import PromptTemplate
+from llama_index.core.query_engine import CustomQueryEngine
+from llama_index.core.retrievers import BaseRetriever
+from typing import Any
 from dotenv import load_dotenv
 import asyncio
 import chromadb
@@ -14,6 +18,19 @@ from scripts.read_data import load_docs_from_folder
 
 warnings.filterwarnings("ignore")
 load_dotenv()
+
+qa_prompt = PromptTemplate(
+    "Below is context information about SpongePy.\n"
+    "---------------------\n"
+    "{context_str}\n"
+    "---------------------\n"
+    "You are a friendly, helpful, and slightly humorous AI assistant whose job is to explain and assist users with SpongePy.\n"
+    "Only use the context provided; if the answer is not clear from it, respond with “I don’t know.”\n"
+    "You may only rely on prior knowledge when it is directly relevant to Data Science.\n"
+    "Don't mention the context or the source of the information in your response.\n"
+    "Question: {query_str}\n"
+    "Answer: "
+)
 
 docs_text = load_docs_from_folder("data")
 documents = [Document(text=chunk) for chunk in docs_text]
@@ -33,11 +50,11 @@ pipeline = IngestionPipeline(
     vector_store=vector_store,
 )
 
-async def main():
+async def index_docs():
     # takes a list of documents
     result = await pipeline.arun(documents=documents)
     return result
-asyncio.run(main())
+asyncio.run(index_docs())
 
 llm = OpenAILike(
     model="meta-llama/llama-3-8b-instruct",
@@ -48,11 +65,32 @@ llm = OpenAILike(
     temperature=1,
 )
 
-# OR as_retriever OR as_chat_engine
-query_engine = index.as_query_engine(
-    # streaming=True,
+retriever = index.as_retriever(similarity_top_k=5, similarity_threshold=0.4)
+
+class RAGStringQueryEngine(CustomQueryEngine):
+    """RAG String Query Engine."""
+
+    retriever: BaseRetriever
+    llm: Any
+    qa_prompt: PromptTemplate
+
+    def custom_query(self, query_str: str) -> str:
+        nodes = self.retriever.retrieve(query_str)
+
+        context_str = "\n\n".join([n.node.get_content() for n in nodes])
+        
+        prompt = self.qa_prompt.format(context_str=context_str, query_str=query_str)
+
+
+        resp = self.llm.complete(prompt)
+        text = getattr(resp, "text", None) or str(resp)
+
+        return text
+
+query_engine = RAGStringQueryEngine(
+    retriever=retriever,
     llm=llm,
-    response_mode="tree_summarize", # OR refine OR compact
+    qa_prompt=qa_prompt,
 )
 
 print("Welcome, coder! \n")

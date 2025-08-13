@@ -1,0 +1,28 @@
+Q: What is SpongePy?
+A: SpongePy is a Python CLI tool designed for cleaning, analyzing, and transforming structured data. It aims to provide data professionals with quick data wrangling capabilities without the need for spreadsheet software.
+
+Q: What are the system requirements for SpongePy?
+A:it requires Python 3.6 or higher and the necessary dependencies listed in the requirements.txt file: 
+[pandas~=2.2.3
+numpy~=2.2.4
+click~=8.1.8]
+
+Q: Is there a GUI version of SpongePy?
+A: No, SpongePy is a command-line interface (CLI) tool and does not have a graphical user interface (GUI).
+
+Q: Is SpongePy suitable for beginners in data analysis?
+A: While SpongePy provides powerful data wrangling capabilities, it is a CLI tool and may require some familiarity with command-line operations. Beginners might need to refer to the documentation to get started.
+
+Q: Is SpongePy compatible with Jupyter Notebooks?
+A: While SpongePy is a CLI tool, you can use it within Jupyter Notebooks by calling shell commands using the ! syntax or by using Python's subprocess module.
+
+Q: How can I contribute to SpongePy?
+A: To contribute to SpongePy, you can fork the repository, make your changes, and submit a pull request. Ensure that your contributions adhere to the project's coding standards and include appropriate tests.
+
+Q: Is SpongePy actively maintained?
+A: Yes, and we actually have a lot of future plans, including advanced imputations, fast exploratory data analysis, basic plotting, AI powered advices on how to deal with data and more!
+
+Q: How can I report bugs or request features for SpongePy?
+A: You can report bugs or request features by opening an issue in the repository. Provide a clear description and any relevant information to help maintainers address the issue.
+
+Repostiory link : https://github.com/Moetez-Fradi/SpongePy
