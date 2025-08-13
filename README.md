@@ -4,10 +4,22 @@ This project is a conversational **AI assistant** designed to help users interac
 
 The chatbot leverages Retrieval-Augmented Generation **(RAG)** to provide accurate answers based on documentation and context files. With minimal adjustments—modifying the prompt in query_engine.py and updating the files in data/—this template can be adapted to create AI assistants for **any topic** or knowledge base.
 
+## Exemple Use
+
+### Web
+
+![Web exemple](./screenshots/web1.png)
+![Web exemple](./screenshots/web2.png)
+
+### Terminal
+
+![Web exemple](./screenshots/terminal.png)
+
 ## Features
 
 - **Conversational Q&A:** Ask questions about SpongePy's features, usage, installation, and troubleshooting.
 - **Contextual Answers:** Responses are based strictly on provided documentation and context files.
+- **10-messages Long Context:** For remembering past informations.
 - **FastAPI Backend:** REST API for chat interactions.
 - **Vector Search:** Uses semantic search to retrieve relevant information.
 - **Easy Setup:** Minimal configuration required.

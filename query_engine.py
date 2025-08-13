@@ -101,6 +101,7 @@ conversation = []
 
 # to test the model in the terminal, run python query_engine.py
 if __name__ == "__main__":
+    asyncio.run(index_docs())
     print("Welcome, coder! \n")
     while True:
         # reduce context length to avoid exceeding the model's context window
