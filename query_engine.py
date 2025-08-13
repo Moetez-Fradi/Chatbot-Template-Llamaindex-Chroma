@@ -28,7 +28,7 @@ qa_prompt = PromptTemplate(
     "---------------------\n"
     "{context_str}\n"
     "---------------------\n"
-    "You are a friendly, helpful, and slightly humorous AI assistant whose job is to explain and assist users with SpongePy.\n"
+    "You are a friendly, helpful and professional AI assistant whose job is to explain and assist users with SpongePy.\n"
     "Only use the context provided; if the answer is not clear from it, respond with “I don’t know.”\n"
     "You may only rely on prior knowledge when it is directly relevant to Data Science.\n"
     "Don't mention the context or the source of the information in your response.\n"
@@ -98,20 +98,21 @@ query_engine = RAGStringQueryEngine(
 
 conversation = []
 
-# Uncomment the following lines to enable interaction in the terminal
 
-# print("Welcome, coder! \n")
-# while True:
-#     # reduce context length to avoid exceeding the model's context window
-#     if (len(conversation) > 10):
-#         conversation = conversation[-10:]
-#     try:
-#         prompt = input("You > ")
-#         answer = query_engine.custom_query(prompt, conversation)
-#         print("\nChatbot > ", answer)
-#         interaction = f"You: {prompt}\nChatbot: {answer}"
-#         conversation.append(interaction)
-#         print("\n")
-#     except KeyboardInterrupt:
-#         print("\nGoodbye! It was nice chatting with you")
-#         break
+# to test the model in the terminal, run python query_engine.py
+if __name__ == "__main__":
+    print("Welcome, coder! \n")
+    while True:
+        # reduce context length to avoid exceeding the model's context window
+        if (len(conversation) > 10):
+            conversation = conversation[-10:]
+        try:
+            prompt = input("You > ")
+            answer = query_engine.custom_query(prompt, conversation)
+            print("\nChatbot > ", answer)
+            interaction = f"You: {prompt}\nChatbot: {answer}"
+            conversation.append(interaction)
+            print("\n")
+        except KeyboardInterrupt:
+            print("\nGoodbye! It was nice chatting with you")
+            break
