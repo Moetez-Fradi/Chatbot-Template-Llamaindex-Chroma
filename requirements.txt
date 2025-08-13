@@ -5,3 +5,6 @@ PyPDF2
 pathlib
 asyncio
 sentence-transformers
+fastapi
+uvicorn
+fastapi-concurrency

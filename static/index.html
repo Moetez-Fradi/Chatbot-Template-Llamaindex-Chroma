@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpongePy Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>SpongePy</h1>
+            <p>Your AI Assistant</p>
+        </header>
+        
+        <div id="chat-box" class="chat-box">
+            <div class="welcome-message">
+                <div class="bot-avatar">🤖</div>
+                <div class="message-content">
+                    <p>Hello! I'm SpongePy, your AI assistant. How can I help you today?</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <form id="chat-form" class="chat-form">
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" required />
+                    <button type="submit" class="send-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

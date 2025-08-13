@@ -1,2 +1,4 @@
 .env
 /db_chroma
+/.git
+/__pycache__
