@@ -20,6 +20,10 @@ warnings.filterwarnings("ignore")
 load_dotenv()
 
 qa_prompt = PromptTemplate(
+    "Below is the content of the conversation so far.\n"
+    "---------------------\n"
+    "{conversation}\n"
+    "---------------------\n"
     "Below is context information about SpongePy.\n"
     "---------------------\n"
     "{context_str}\n"
@@ -74,12 +78,12 @@ class RAGStringQueryEngine(CustomQueryEngine):
     llm: Any
     qa_prompt: PromptTemplate
 
-    def custom_query(self, query_str: str) -> str:
+    def custom_query(self, query_str: str, conversation: list) -> str:
         nodes = self.retriever.retrieve(query_str)
 
         context_str = "\n\n".join([n.node.get_content() for n in nodes])
         
-        prompt = self.qa_prompt.format(context_str=context_str, query_str=query_str)
+        prompt = self.qa_prompt.format(context_str=context_str, query_str=query_str, conversation="\n".join(conversation))
 
 
         resp = self.llm.complete(prompt)
@@ -93,13 +97,20 @@ query_engine = RAGStringQueryEngine(
     qa_prompt=qa_prompt,
 )
 
+conversation = []
+
 print("Welcome, coder! \n")
 while True:
+    # reduce context length to avoid exceeding the model's context window
+    if (len(conversation) > 10):
+        conversation = conversation[-10:]
     try:
         prompt = input("You > ")
-        answer = query_engine.query(prompt)
+        answer = query_engine.custom_query(prompt, conversation)
         print("\nChatbot > ", answer)
+        interaction = f"You: {prompt}\nChatbot: {answer}"
+        conversation.append(interaction)
         print("\n")
     except KeyboardInterrupt:
-        print("\nGoodbye!")
+        print("\nGoodbye! It was nice chatting with you")
         break
