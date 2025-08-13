@@ -1,0 +1,125 @@
+SpongePy - Data Processing Toolkit
+
+A versatile Python CLI tool for cleaning, analyzing, and transforming structured data. Designed for data professionals who need quick data wrangling capabilities without spreadsheet software.
+Download: https://pypi.org/project/spongepy/
+Features
+
+Data Cleaning
+
+    Auto-clean phone numbers, IDs, and names
+
+    Handle missing data with smart strategies:
+
+        Delete columns with more than 55% missing values
+
+        Fill numeric columns with mean or median
+
+        Multiple threshold configurations
+
+    Text normalization (case conversion, special characters)
+
+Data Analysis
+
+    Generate comprehensive reports:
+
+        Missing value analysis
+
+        Statistical summaries
+
+        Column type detection
+
+        Character distribution in text columns
+
+Multi-Format Support
+
+    Input: CSV, Excel, JSON, Parquet, SQLite, Stata, Feather, Pickle
+
+    Output: All input formats plus HTML and XML (with consistent schema)
+
+Installation
+
+pip install spongepy
+Usage
+
+Basic command structure:
+spongepy --file <input> [OPTIONS]
+
+Key Options:
+
+    -f / --file: Input file (required)
+
+    --clean: Enable auto-cleaning
+
+    -c / --config: Use custom cleaning config (JSON)
+
+    -s / --stats: Show summary statistics
+
+    -d / --details: Show detailed column analysis
+
+    -e / --export: Export cleaned data (specify filename)
+
+Configuration Example
+
+Generate config template:
+spongepy -f data.csv --details
+
+Sample config.json:
+{
+"missing-data": [
+["Age", "4.2%", "mean"],
+["CreditScore", "12.1%", "median"]
+],
+"phone-number": "Contact",
+"name": ["FirstName", "LastName"],
+"text-columns": [
+{
+"column": "Notes",
+"special": "!?,.-",
+"numbers": ""
+}
+]
+}
+Common Workflows
+
+Quick Clean and Export:
+spongepy -f dirty_data.xlsx --clean --export clean_data.parquet
+
+Generate Data Health Report:
+spongepy -f customer_db.sqlite --details > report.txt
+
+Custom Pipeline
+
+    Generate config:
+    spongepy -f raw.csv --details
+
+    Edit config.json (rules are under "Guide")
+
+    Run targeted clean:
+    spongepy -f raw.csv --clean -c config.json -e cleaned.csv
+
+Technical Specs
+
+Data Cleaning Logic:
+
+    Missing Data < 5%: Drop rows
+
+    Missing Data 5%-55%: Mean/median imputation
+
+    Missing Data > 80%: Column removal
+
+Supported Text Operations:
+
+    Case normalization
+
+    Special character whitelisting
+
+    Digit removal
+
+    Custom regex patterns
+
+Support and Contribution
+
+Found a bug? Want a new feature? Open an issue.
+License: MIT
+Version: 1.1.0
+Compatibility: Python 3.8+

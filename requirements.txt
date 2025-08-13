@@ -1,0 +1,7 @@
+llama-index
+python-dotenv
+chromadb
+PyPDF2
+pathlib
+asyncio
+sentence-transformers
