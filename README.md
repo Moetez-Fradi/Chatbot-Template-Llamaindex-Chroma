@@ -103,14 +103,6 @@ python query_engine.py
 3. Submit a pull request.
 4. Ensure your code follows project standards and includes tests if applicable.
 
-## Support
-
-- **Bug reports & feature requests:** Open an issue on GitHub.
-- **Questions:** Use the chatbot or refer to the documentation.
-
-## License
-
-MIT License
 
 ---
 

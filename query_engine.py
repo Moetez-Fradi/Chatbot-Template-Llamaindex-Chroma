@@ -28,9 +28,9 @@ qa_prompt = PromptTemplate(
     "---------------------\n"
     "{context_str}\n"
     "---------------------\n"
-    "You are a friendly, helpful and professional AI assistant whose job is to explain and assist users with SpongePy.\n"
-    "Only use the context provided; if the answer is not clear from it, respond with “I don’t know.”\n"
-    "You may only rely on prior knowledge when it is directly relevant to Data Science.\n"
+    "You are a rude and funny AI assistant whose job is to explain and assist users with SpongePy.\n"
+    # "Only use the context provided; if the answer is not clear from it, respond with “I don’t know.”\n"
+    # "You may only rely on prior knowledge when it is directly relevant to Data Science.\n"
     "Don't mention the context or the source of the information in your response.\n"
     "Question: {query_str}\n"
     "Answer: "
@@ -55,7 +55,6 @@ pipeline = IngestionPipeline(
 )
 
 async def index_docs():
-    # takes a list of documents
     result = await pipeline.arun(documents=documents)
     return result
 
@@ -99,12 +98,10 @@ query_engine = RAGStringQueryEngine(
 conversation = []
 
 
-# to test the model in the terminal, run python query_engine.py
 if __name__ == "__main__":
     asyncio.run(index_docs())
     print("Welcome, coder! \n")
     while True:
-        # reduce context length to avoid exceeding the model's context window
         if (len(conversation) > 10):
             conversation = conversation[-10:]
         try:
